@@ -1,72 +1,27 @@
 
 [[providers]]
-name = "naturalearth"
-type = "gpkg"
-filepath = "naturalearth.gpkg"
-srid = 4326
+name = "naturalearth"		# name of the provider, this is what will appear in the capabilities.json endpoint, as well as on the side of the build-in viewer.
+type = "gpkg"			# the type of the provide is the type of backend data store. At current only postgis and gpkg are supported.
+filepath = "naturalearth.gpkg"	# where is the gpkg file located relative to the working directory of the binary.
+srid = 4326			# the srid the data set is in.
 
-[[providers.layers]]
-name = "lands10m"
-tablename = "ne_10m_land"
-id_fieldname = "fid"
-
-[[providers.layers]]
-name = "lands110m"
-tablename = "ne_110m_land"
-id_fieldname = "fid"
-
-[[providers.layers]]
-name = "timezones"
-tablename = "ne_10m_time_zones"
-id_fieldname = "fid"
-fields = ["name", "map_color6","map_color8"]
+	[[providers.layers]]
+	name = "lands10m"		# a unique name that can be be used inconjuction with providers to address a source of data, this can be a tablename or a custom sql.
+	tablename = "ne_10m_land"	# the table to pull the data from.
+	id_fieldname = "fid"		# the column in the above table (or sql) that contains the feature id, this id should be unique across the table.
 
 
-
-
-[[providers]]
-name = "populated"
-type = "gpkg"
-filepath = "populated.gpkg"
-srid = 4326
-
-[[providers.layers]]
-name = "places"
-tablename = "ne_10m_populated_places"
-id_fieldname = "fid"
-fields = ["name"]
-
-
-# maps are made up of layers
+# maps are the collection of data that you want to display. They are made up of layers. Each layer describes when a data source made up of provider.layers from above should be included
+# in the tile being requested.
 [[maps]]
 
 	name = "cities"			# used in the URL to reference this map (/maps/:map_name)
 	center = [-90.2,38.6,3.0]	# where to center of the map (lon, lat, zoom)
 
 	[[maps.layers]]
-	name="lands"
+	name="lands"				   # the name of may layer may be the same as another layer as long as their zoom levels don't overlap.
 	provider_layer = "naturalearth.lands110m"  # must match a data provider layer
 	min_zoom = 0                               # minimum zoom level to include this layer
 	max_zoom = 22                              # maximum zoom level to include this layer
-	dont_simplify = true 
-
-	#[[maps.layers]]
-	#name="lands"
-	#provider_layer = "naturalearth.lands10m"  # must match a data provider layer
-	#min_zoom = 8                               # minimum zoom level to include this layer
-	#max_zoom = 22                              # maximum zoom level to include this layer
-
-	#[[maps.layers]]
-	#name="places"
-	#provider_layer = "populated.places" 
-	#min_zoom = 0
-	#max_zoom = 22
-	#dont_simplify = true
-
-	[[maps.layers]]
-	name="timezones"
-	provider_layer = "naturalearth.timezones"  # must match a data provider layer
-	min_zoom = 0                               # minimum zoom level to include this layer
-	max_zoom = 22                              # maximum zoom level to include this layer
-	dont_simplify = false 
+	dont_simplify = true 			   # if the geometries are already simplified in the database, no need to have tegola simplify them.
 
