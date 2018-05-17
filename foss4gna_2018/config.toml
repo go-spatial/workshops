@@ -1,0 +1,72 @@
+
+[[providers]]
+name = "naturalearth"
+type = "gpkg"
+filepath = "naturalearth.gpkg"
+srid = 4326
+
+[[providers.layers]]
+name = "lands10m"
+tablename = "ne_10m_land"
+id_fieldname = "fid"
+
+[[providers.layers]]
+name = "lands110m"
+tablename = "ne_110m_land"
+id_fieldname = "fid"
+
+[[providers.layers]]
+name = "timezones"
+tablename = "ne_10m_time_zones"
+id_fieldname = "fid"
+fields = ["name", "map_color6","map_color8"]
+
+
+
+
+[[providers]]
+name = "populated"
+type = "gpkg"
+filepath = "populated.gpkg"
+srid = 4326
+
+[[providers.layers]]
+name = "places"
+tablename = "ne_10m_populated_places"
+id_fieldname = "fid"
+fields = ["name"]
+
+
+# maps are made up of layers
+[[maps]]
+
+	name = "cities"			# used in the URL to reference this map (/maps/:map_name)
+	center = [-90.2,38.6,3.0]	# where to center of the map (lon, lat, zoom)
+
+	[[maps.layers]]
+	name="lands"
+	provider_layer = "naturalearth.lands110m"  # must match a data provider layer
+	min_zoom = 0                               # minimum zoom level to include this layer
+	max_zoom = 22                              # maximum zoom level to include this layer
+	dont_simplify = true 
+
+	#[[maps.layers]]
+	#name="lands"
+	#provider_layer = "naturalearth.lands10m"  # must match a data provider layer
+	#min_zoom = 8                               # minimum zoom level to include this layer
+	#max_zoom = 22                              # maximum zoom level to include this layer
+
+	#[[maps.layers]]
+	#name="places"
+	#provider_layer = "populated.places" 
+	#min_zoom = 0
+	#max_zoom = 22
+	#dont_simplify = true
+
+	[[maps.layers]]
+	name="timezones"
+	provider_layer = "naturalearth.timezones"  # must match a data provider layer
+	min_zoom = 0                               # minimum zoom level to include this layer
+	max_zoom = 22                              # maximum zoom level to include this layer
+	dont_simplify = false 
+
