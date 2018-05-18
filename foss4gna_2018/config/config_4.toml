@@ -12,7 +12,7 @@ srid = 4326			# the srid the data set is in.
 	
 	[[providers.layers]] 		# the name that will be referenced for a map layer
 	name = "timezones" 		# the name of the database table to query against
-	tablename = "ne_10m_time_zones” # additional fields which will be included as tags for the feature
+	tablename = "ne_10m_time_zones" # additional fields which will be included as tags for the feature
 	fields = ["name", "map_color6","map_color8"]
 
 	[[providers.layers]]

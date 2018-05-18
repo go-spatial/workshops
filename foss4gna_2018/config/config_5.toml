@@ -1,4 +1,8 @@
 
+[cache]
+type = "file"     # implement cache on top of filesystem
+basepath = "tmp/" # caching directory
+
 [[providers]]
 name = "naturalearth"		# name of the provider, this is what will appear in the capabilities.json endpoint, as well as on the side of the build-in viewer.
 type = "gpkg"			# the type of the provide is the type of backend data store. At current only postgis and gpkg are supported.
@@ -32,9 +36,6 @@ srid = 4326
 	tablename = "ne_10m_populated_places" 
 	fields = ["name", "pop_max"] 
 
-[cache]
-type = "file"     # implement cache on top of filesystem
-basepath = "tmp/" # caching directory
 
 # maps are the collection of data that you want to display. They are made up of layers. Each layer describes when a data source made up of provider.layers from above should be included
 # in the tile being requested.
